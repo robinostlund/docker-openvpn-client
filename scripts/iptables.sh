@@ -1,6 +1,7 @@
 #!/bin/bash
 
 iptables="/sbin/iptables"
+LOCAL_NETWORKS="${LOCAL_NETWORKS:='default'}"
 OPENVPN_INTERFACE="openvpn"
 OPENVPN_ALLOW_TCP="${OPENVPN_FIREWALL_ALLOW_TCP:='default'}"
 OPENVPN_ALLOW_UDP="${OPENVPN_FIREWALL_ALLOW_UDP:='default'}"
@@ -89,6 +90,13 @@ IFS=',' read -ra FW_RULES <<< "$OPENVPN_REMOTE_PORTS"
 for rule in "${FW_RULES[@]}"; do
     $iptables -A default_out -o eth0 -p udp --dport $rule -m state --state NEW -j ACCEPT
     $iptables -A default_out -o eth0 -p tcp --dport $rule -m state --state NEW -j ACCEPT
+done
+
+DOCKER_GW = "$(ip route |awk '/default/ {print $3}')"
+IFS=',' read -ra NETWORKS <<< "$LOCAL_NETWORKS"
+for network in "${NETWORKS[@]}"; do
+    $iptables -A default_out -o eth0 -d $network -m state --state NEW -j ACCEPT
+    ip route | grep -q "$network" || ip route add to $network via $DOCKER_GW dev eth0
 done
 
 # drop all other traffic, MUST BE LAST!
