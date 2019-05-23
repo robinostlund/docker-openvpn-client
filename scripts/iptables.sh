@@ -92,7 +92,7 @@ for rule in "${FW_RULES[@]}"; do
     $iptables -A default_out -o eth0 -p tcp --dport $rule -m state --state NEW -j ACCEPT
 done
 
-DOCKER_GW = "$(ip route |awk '/default/ {print $3}')"
+DOCKER_GW="$(ip route |awk '/default/ {print $3}')"
 IFS=',' read -ra NETWORKS <<< "$LOCAL_NETWORKS"
 for network in "${NETWORKS[@]}"; do
     $iptables -A default_out -o eth0 -d $network -m state --state NEW -j ACCEPT
