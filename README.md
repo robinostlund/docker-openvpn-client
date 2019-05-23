@@ -24,7 +24,7 @@ $ docker run -dt \
     -e OPENVPN_REMOTE_PORTS=1194,1195\
     -e OPENVPN_FIREWALL_ALLOW_TCP=80,443 \
     -e OPENVPN_FIREWALL_ALLOW_UDP=80,443 \
-    -e LOCAL_NETWORKS=192.168.0.0/24, \
+    -e LOCAL_NETWORKS=192.168.0.0/24 \
     --cap-add=NET_ADMIN \
     --device /dev/net/tun \
     robostlund/openvpn-client:latest
