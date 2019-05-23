@@ -3,7 +3,7 @@ MAINTAINER Robin Ostlund <me@robinostlund.name>
 
 # Install openvpn
 RUN apk --no-cache --no-progress upgrade && \
-    apk --no-cache --no-progress add bash curl ip6tables iptables openvpn shadow tini supervisor && \
+    apk --no-cache --no-progress add bash curl ip6tables iptables openvpn shadow tini supervisor fping && \
     addgroup -S vpn && \
     rm -rf /tmp/* && \
     mkdir /root/files
@@ -26,7 +26,4 @@ HEALTHCHECK --interval=60s --timeout=15s --start-period=120s \
 
 VOLUME ["/vpn"]
 
-
-
 ENTRYPOINT ["/sbin/tini", "--", "/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
-#CMD ["supervisord"]
