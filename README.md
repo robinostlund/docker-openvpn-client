@@ -14,13 +14,14 @@ TBA
 - OPENVPN_FIREWALL_ALLOW_TCP=80,443
 - OPENVPN_FIREWALL_ALLOW_UDP=53
 
+
 ----------
-# Run example:
+# Start OpenVPN client container:
 ```sh
 $ docker run -dt \
     --name openvpn-client \
     --hostname openvpn-client \
-    -v /tmp/vpn:/vpn \
+    -v /data/vpn:/vpn \
     -e OPENVPN_REMOTE_PORTS=1194,1195\
     -e OPENVPN_FIREWALL_ALLOW_TCP=80,443 \
     -e OPENVPN_FIREWALL_ALLOW_UDP=80,443 \
@@ -28,4 +29,16 @@ $ docker run -dt \
     --cap-add=NET_ADMIN \
     --device /dev/net/tun \
     robostlund/openvpn-client:latest
+```
+
+## Publish local services to openvpn client container
+Lets say you would like to run a webserver that is accessible from the openvpn ip you can link the webserver container to the openvpn client container.
+
+```sh
+$ docker run -dt \
+    --name webserver \
+    --hostname webserver \
+    --net container:openvpn-client \
+    -v /data/web:/data \
+    robostlund/nginx-php-mysql-static:latest
 ```
