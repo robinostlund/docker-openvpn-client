@@ -9,16 +9,13 @@ OpenVPN client container also has a built in ping monitor, so if the openvpn int
 
 ----------
 # Environment Variables
-## Description
-- LOCAL_NETWORKS: Comma separated list of subnets that you would like to grant full access to from container
-- OPENVPN_REMOTE_PORTS: Comma separated list of ports that your openvpn server is listening on
-- OPENVPN_FIREWALL_ALLOW_TCP: Comma separated list of TCP ports that you want to open to container, if environment variable is empty all TCP ports will be allowed from outside. If not specified, TCP traffic from outside will be blocked.
-- OPENVPN_FIREWALL_ALLOW_UDP: Comma separated list of UDP ports that you want to open to container, if environment variable is empty all UDP ports will be allowed from outside. If not specified, UDP traffic from outside will be blocked.
-## Examples
-- LOCAL_NETWORKS=192.168.0.0/24,192.168.1.0/24
-- OPENVPN_REMOTE_PORTS=1194,1195
-- OPENVPN_FIREWALL_ALLOW_TCP=80,443
-- OPENVPN_FIREWALL_ALLOW_UDP=53
+| Variable | Description | Example |
+| :--- | :--- | :---  |
+| LOCAL_NETWORKS | Comma separated list of subnets that you would like to grant full access to from container | 192.168.0.0/24,192.168.1.0/24 |
+| OPENVPN_REMOTE_PORTS | Comma separated list of ports that your openvpn server is listening on | 1194,1195 |
+| OPENVPN_FIREWALL_ALLOW_TCP | Comma separated list of TCP ports that you want to open to container, if environment variable is empty all TCP ports will be allowed from outside. If not specified, TCP traffic from outside will be blocked. | 80,443 |
+| OPENVPN_FIREWALL_ALLOW_UDP | Comma separated list of UDP ports that you want to open to container, if environment variable is empty all UDP ports will be allowed from outside. If not specified, UDP traffic from outside will be blocked. | 53 |
+
 
 
 ----------
@@ -28,10 +25,10 @@ $ docker run -dt \
     --name openvpn-client \
     --hostname openvpn-client \
     -v /data/vpn:/vpn \
+    -e LOCAL_NETWORKS=192.168.0.0/24 \
     -e OPENVPN_REMOTE_PORTS=1194,1195\
     -e OPENVPN_FIREWALL_ALLOW_TCP=80,443 \
     -e OPENVPN_FIREWALL_ALLOW_UDP=80,443 \
-    -e LOCAL_NETWORKS=192.168.0.0/24 \
     --cap-add=NET_ADMIN \
     --device /dev/net/tun \
     robostlund/openvpn-client:latest
