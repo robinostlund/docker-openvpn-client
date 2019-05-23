@@ -15,7 +15,7 @@ TBA
 - OPENVPN_FIREWALL_ALLOW_UDP=53
 
 ----------
-###### Run example:
+# Run example:
 ```sh
 $ docker run -dt \
     --name openvpn-client \
