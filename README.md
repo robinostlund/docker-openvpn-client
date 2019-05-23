@@ -5,6 +5,8 @@ You can also specify which ports that should be accessible from vpn to OpenVPN c
 
 If the vpn connection is down only ping, dns and the OpenVPN Remote ports will be allowed from OpenVPN client container to outside.
 
+OpenVPN client container also has a built in ping monitor, so if the openvpn interface is up and ping is not possible it will restart the connection.
+
 ----------
 # Environment Variables
 ## Description
