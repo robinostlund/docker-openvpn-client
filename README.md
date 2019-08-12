@@ -1,6 +1,6 @@
 
 # Information
-This is a docker container running OpenVPN client and HAProxy. It has the possibility to link other containers to send traffic trough openvpn.
+This is a docker container running OpenVPN client. It has the possibility to link other containers to send traffic trough openvpn.
 You can also specify which ports that should be accessible from vpn to OpenVPN client container.
 
 If the vpn connection is down only ping, dns and the OpenVPN Remote ports will be allowed from OpenVPN client container to outside.
