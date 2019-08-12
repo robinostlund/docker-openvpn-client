@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-OPENVPN_DIR=/vpn
+OPENVPN_DIR=/data/openvpn
 OPENVPN_CONFIG=openvpn.conf
 OPENVPN_PID_FOLDER=/var/run/openvpn
 OPENVPN_PID_FILE=openvpn.pid
@@ -11,25 +11,25 @@ if [ ! -c /dev/net/tun ]; then
 fi
 
 # create folders
-if [ ! -d "/vpn/log" ]; then
-    mkdir -p /vpn/log
+if [ ! -d "/data/openvpn/log" ]; then
+    mkdir -p /data/openvpn/log
 fi
 
 if [ ! -d "$OPENVPN_PID_FOLDER" ]; then
     mkdir -p $OPENVPN_PID_FOLDER
 fi
 
-if [ ! -d "/vpn/examples" ]; then
-    mkdir /vpn/examples
-    cp /root/files/credentials.example /vpn/examples/credentials.example
-    cp /root/files/openvpn.conf.example /vpn/examples/openvpn.conf.example
+if [ ! -d "/data/openvvpn/examples" ]; then
+    mkdir /data/openvpn/examples
+    cp /root/files/credentials.example /data/openvpn/examples/credentials.example
+    cp /root/files/openvpn.conf.example /data/openvpn/examples/openvpn.conf.example
 fi
 
 # apply iptables rules
 /usr/bin/iptables.sh
 
 # start openvpn
-openvpn --cd $OPENVPN_DIR --config $OPENVPN_CONFIG --writepid $OPENVPN_PID_FOLDER/$OPENVPN_PID_FILE --dev openvpn --dev-type tun --log /vpn/log/openvpn.log
+openvpn --cd $OPENVPN_DIR --config $OPENVPN_CONFIG --writepid $OPENVPN_PID_FOLDER/$OPENVPN_PID_FILE --dev openvpn --dev-type tun --log /data/openvpn/log/openvpn.log
 OPENVPN_EXIT_CODE=$?
 
 # route all traffic through openvpn
