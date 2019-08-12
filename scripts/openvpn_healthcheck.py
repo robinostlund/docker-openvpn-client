@@ -7,7 +7,7 @@ import subprocess
 
 fping_path = 'fping'
 fping_urls = ['ftp.sunet.se', 'google.se']
-openvpn_interface_name = 'openvpn'
+openvpn_interface_name = 'tun0'
 openvpn_pid_file = '/var/run/openvpn/openvpn.pid'
 sleep_time = 120
 
